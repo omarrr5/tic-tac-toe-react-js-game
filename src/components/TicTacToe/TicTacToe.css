@@ -36,6 +36,10 @@
     cursor: pointer;
 }
 
+.boxes img{
+    margin: 50px 50px;
+}
+
 .board{
     height: 600px;
     width: 564px;
