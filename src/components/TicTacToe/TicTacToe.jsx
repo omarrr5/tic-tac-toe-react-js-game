@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import './TicTacToe.css'
 import circle_icon from '../assets/circle.png'
 import cross_icon from '../assets/cross.png'
+import clickSound from '../assets/mixkit-retro-game-notification-212.wav';
 
 let data = ["","","","","","","","",""];
 
@@ -22,6 +23,7 @@ const TicTacToe = () => {
 
     let box_array = [box1,box2,box3,box4,box5,box6,box7,box8,box9];
 
+    const audioRef = useRef(new Audio(clickSound));
 
     const toggle = (e,num) =>{
         if(lock){
@@ -38,7 +40,7 @@ const TicTacToe = () => {
             data[num] = "o";
             setCount(++count);
         }
-
+        audioRef.current.play();
         checkWinner();
     }
 
@@ -72,7 +74,7 @@ const TicTacToe = () => {
         }
     }
 
-    const won = (winner)=>{
+    const won = (winner, winningBoxes)=>{
         setLock(true);
         if(winner ==="x"){
             titleRef.current.innerHTML = `Congratulations: <img src=${cross_icon}> Wins!`
@@ -81,6 +83,10 @@ const TicTacToe = () => {
             titleRef.current.innerHTML = `Congratulations!: <img src=${circle_icon}>`
         }
     }
+
+    winningBoxes.forEach(index => {
+        box_array[index].current.classList.add('winner-box');
+    })
     
     const reset = () => {
         setLock(false);
